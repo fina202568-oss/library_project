@@ -1,24 +1,19 @@
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
-from cafe import views
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
-    # Main pages
+    # ===== MAIN PAGES =====
     path('', views.home_page, name='home'),
     path('menu/', views.menu_page, name='menu'),
-    path('about/', views.about_page, name='about'),
-    path('contact/', views.contact_page, name='contact'),
-    path('reservation/', views.reservation_page, name='reservation'),
-
-    # Cafe app extra urls (order, add-to-cart etc)
-    path('', include('cafe.urls')),
+    path('cart/', views.view_cart, name='view_cart'),
+    path('order/', views.order_page, name='order_page'),
+    path('add-to-cart/<int:item_id>/', views.add_to_cart, name='add_to_cart'),
+    path('checkout/', views.checkout_page, name='checkout_page'),
+    path('checkout-success/<int:order_id>/', views.checkout_success, name='checkout_success'),
+    path('today-special/', views.today_special_partial, name='today_special'),
+    path('category/<int:pk>/edit/', views.category_edit, name='category_edit'),
+    path('category/<int:pk>/delete/', views.category_delete, name='category_delete'),
+    path('menuitem/<int:pk>/edit/', views.menuitem_edit, name='menuitem_edit'),
+    path('menuitem/<int:pk>/delete/', views.menuitem_delete, name='menuitem_delete'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-path('', include('cafe.urls')),  # ✅ app URLs include गर्नुहोस्
+    
